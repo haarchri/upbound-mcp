@@ -1,0 +1,30 @@
+apiVersion: mcp.upbound.io/v1alpha1
+kind: ControlPlane
+metadata:
+  name: caas-aks
+spec:
+  forProvider:
+    name: caas-aks
+    description: caas-aks
+    organizationName: upbound
+    configuration: caas-aks
+    tokenSecretRef:
+      name: up-access-token
+      namespace: upbound-system
+      key: token
+  writeConnectionSecretToRef:
+    name: caas-aks-kubeconfig
+    namespace: upbound-system
+---
+apiVersion: mcp.upbound.io/v1alpha1
+kind: ControlPlanePermission
+metadata:
+  name: owner-caas-aks-team-a
+spec:
+  forProvider:
+    organizationName: upbound
+    teamIdRef:
+      name: team-a
+    controlPlaneNameRef:
+      name: caas-aks
+    permission: owner
